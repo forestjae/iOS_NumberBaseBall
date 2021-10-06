@@ -20,37 +20,35 @@ func generateRandomNumbers() -> [Int] {
     return Array(radomNumbers)
 }
 
-func countMatchingNumbers(of target: [Int], and playerNumbers: [Int]) -> Int {
-    let firstSet = Set<Int>(target)
-    let secondSet = Set<Int>(playerNumbers)
-    let count = firstSet.intersection(secondSet).count
+func countMatchingNumbers(of target: [Int], and userNumbers: [Int]) -> Int {
+    let targetSet = Set<Int>(target)
+    let playerSet = Set<Int>(userNumbers)
+    let count = targetSet.intersection(playerSet).count
     return count
 }
 
-func calculateStrikeCount(of target: [Int], and playerNumbers: [Int]) -> Int {
+func countStrike(of target: [Int], and userNumbers: [Int]) -> Int {
     var count = 0
     for index in 0...2 {
-        if target[index] == playerNumbers[index] {
+        if target[index] == userNumbers[index] {
             count += 1
         }
     }
     return count
 }
 
-print("정답 : \(targetNumbers[0]) \(targetNumbers[1]) \(targetNumbers[2])")
-
-
 func compareNumbers() {
-    let playerNumbers: [Int] = generateRandomNumbers()
-    print("임의의 수 : \(playerNumbers[0]) \(playerNumbers[1]) \(playerNumbers[2])")
+    let userNumbers: [Int] = generateRandomNumbers()
+    print("임의의 수 : \(userNumbers[0]) \(userNumbers[1]) \(userNumbers[2])")
     
-    let totalCount = countMatchingNumbers(of: targetNumbers, and: playerNumbers)
-    let strikeCount: Int = calculateStrikeCount(of: targetNumbers, and: playerNumbers)
+    let totalCount = countMatchingNumbers(of: targetNumbers, and: userNumbers)
+    let strikeCount: Int = countStrike(of: targetNumbers, and: userNumbers)
     let ballCount: Int = totalCount - strikeCount
     print("\(strikeCount) 스트라이크, \(ballCount) 볼")
+    
     if strikeCount == 3 {
         print("사용자 승리!")
-        remainingAttempts = 0
+        return
     }
 }
 
@@ -59,6 +57,7 @@ func printResult() {
         compareNumbers()
         remainingAttempts -= 1
         let result = remainingAttempts == 0 ? "컴퓨터 승리...!\n" : ""
+        
         print("남은 기회 : \(remainingAttempts)\n", terminator: result)
     }
 }
