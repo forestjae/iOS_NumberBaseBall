@@ -42,20 +42,47 @@ func calculateStrikeAndBall(targetNumbers: [Int], playerNumbers: [Int]) -> (Int,
     return (strikes, balls)
 }
 
-func playInning() -> Int {
-    let playerNumbers = generateRandomNumbers()
-    print("임의의 수 : \(playerNumbers[0]) \(playerNumbers[1]) \(playerNumbers[2])")
-    
+func playInning(playerNumbers: [Int]) -> Int {
+    let playerNumbers = playerNumbers
+    print("playerNumbers:\(playerNumbers)")
+        
     let (strikeCount, ballCount) = calculateStrikeAndBall(targetNumbers: targetNumbers, playerNumbers: playerNumbers)
     print("\(strikeCount) 스트라이크, \(ballCount) 볼")
-    
+        
     return strikeCount
+
 }
 
-func receivePlayerNumbers() {
+func receivePlayerNumbers() -> [Int] {
     print("숫자 3개를 띄어쓰기로 구분하여 입력해주세요.\n중복 숫자는 허용하지 않습니다.")
     print("입력 : ", terminator: "")
+    guard let input = readLine() else { return [0] }
+    let inputArray = input.components(separatedBy: " ")
+    
+    if let refinedArray = refinePlayerNumbers(inputArray: inputArray) {
+        return refinedArray
+    }
+    print("입력이 잘못되었습니다.")
+    receivePlayerNumbers()
+    
 }
+
+func refinePlayerNumbers(inputArray: [String]) -> [Int]? {
+    if inputArray.count != 3 {
+    
+    }
+    var newArray: [Int] = []
+    for index in 0...2 {
+        guard let a = Int(inputArray[index]), a > 0 , a < 10 else { return nil }
+        newArray.append(a)
+    }
+    if Set(inputArray).count != 3 {
+        return nil
+    }
+    return newArray
+    
+}
+
 
 func printRemainingAttempts() {
     remainingAttempts -= 1
@@ -69,8 +96,10 @@ func printRemainingAttempts() {
 
 func startGame() {
     while remainingAttempts > 0 {
-    
-        let strikeCount = playInning()
+        
+        let input = receivePlayerNumbers()
+        
+        let strikeCount = playInning(playerNumbers: input)
         
         if strikeCount == 3 {
             print("사용자 승리!")
