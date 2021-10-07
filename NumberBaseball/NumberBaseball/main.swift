@@ -52,10 +52,30 @@ func playInning() -> Int {
     return strikeCount
 }
 
-func receivePlayerNumbers() {
+func receivePlayerNumbers() -> Int? {
     print("숫자 3개를 띄어쓰기로 구분하여 입력해주세요.\n중복 숫자는 허용하지 않습니다.")
     print("입력 : ", terminator: "")
+    guard let input: String = readLine(), input != "" else { return nil }
+
+    if let validInput = isValidInput(input: input) {
+        print("유효한 입력: (validInput)")
+        return 2
+    }
+    print("입력이 잘못되었습니다")
+    receivePlayerNumbers()
+    return 2
 }
+
+func isValidInput(input: String) -> [Int]? {
+    let inputArray: [String] = input.components(separatedBy: " ")
+    let intArray: [Int] = inputArray.compactMap{ Int($0) }.filter{ 0 < $0 && $0 < 10 }
+
+    guard Set(intArray).count == 3 else { return nil }
+
+    return intArray
+}
+
+
 
 func printRemainingAttempts() {
     remainingAttempts -= 1
