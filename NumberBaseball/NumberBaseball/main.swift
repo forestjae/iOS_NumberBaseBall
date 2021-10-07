@@ -64,6 +64,7 @@ func printRemainingAttempts() {
 
 func startGame() {
     while remainingAttempts > 0 {
+    
         let strikeCount = playInning()
         
         if strikeCount == 3 {
@@ -74,23 +75,37 @@ func startGame() {
     }
 }
 
-func printMenu() {
-    print("1. 게임시작\n 2. 게임종료")
-    print("원하는 기능을 선택해 주세요 : ")
-}
-
-func inputPlayerNumbers() {
-    guard let playerNumbers = readLine() else { return }
+func isValidMenu(_ input: Int) -> Bool {
+    guard input == 2 else { return false }
+    return true
     
 }
 
-func judgeRightInput(_ input: String) {
-    guard let input2 = Int(input), input2 < 3, input2 > 0 else { return }
-    guard let input2 = Int(input), input2 == 1 || input2 == 2 else { return }
+
+func receiveMenuNumber() {
+    print("1. 게임시작\n2. 게임종료")
+    print("원하는 기능을 선택해 주세요 : ", terminator: "")
+    guard let playerNumbers = readLine(),
+          let input = Int(playerNumbers),
+          isValidMenu(input)
+          else { print("입력이 잘못되었습니다")
+                 receiveMenuNumber()
+          return }
     
+    
+    
+    
+    startGame()
+    receiveMenuNumber()
 }
 
-startGame()
+//func judgeRightInput(_ input: String) {
+//    guard let input2 = Int(input), input2 < 3, input2 > 0 else { return }
+//    guard let input2 = Int(input), input2 == 1 || input2 == 2 else { return }
+//
+//}
+//
 
+receiveMenuNumber()
 
 
