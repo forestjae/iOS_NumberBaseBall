@@ -27,11 +27,16 @@ func countMatchingNumbers(target: [Int], player: [Int]) -> Int {
 }
 
 func calculateStrikeCount(target: [Int], player: [Int]) -> Int {
-    var count = 0
+    var strikeCount = 0
+    var ballCount = 0
+    
+    target == player
+    
+    
     for index in 0...2 {
-        count += target[index] == player[index] ? 1 : 0
+        strikeCount += target[index] == player[index] ? 1 : 0
     }
-    return count
+    return strikeCount
 }
 
 func calculateStrikeAndBall(targetNumbers: [Int], playerNumbers: [Int]) -> (Int, Int) {
@@ -43,27 +48,28 @@ func calculateStrikeAndBall(targetNumbers: [Int], playerNumbers: [Int]) -> (Int,
 }
 
 func playInning() -> Int {
-    let playerNumbers = generateRandomNumbers()
-    print("임의의 수 : \(playerNumbers[0]) \(playerNumbers[1]) \(playerNumbers[2])")
+    if let playerNumbers: [Int] = receivePlayerNumbers() {
+        print("임의의 수 : \(playerNumbers[0]) \(playerNumbers[1]) \(playerNumbers[2])")
+        
+        let (strikeCount, ballCount) = calculateStrikeAndBall(targetNumbers: targetNumbers, playerNumbers: playerNumbers)
+        print("\(strikeCount) 스트라이크, \(ballCount) 볼")
+        
+        return strikeCount
+    }
     
-    let (strikeCount, ballCount) = calculateStrikeAndBall(targetNumbers: targetNumbers, playerNumbers: playerNumbers)
-    print("\(strikeCount) 스트라이크, \(ballCount) 볼")
-    
-    return strikeCount
 }
 
-func receivePlayerNumbers() -> Int? {
+func receivePlayerNumbers() -> [Int]? {
     print("숫자 3개를 띄어쓰기로 구분하여 입력해주세요.\n중복 숫자는 허용하지 않습니다.")
     print("입력 : ", terminator: "")
     guard let input: String = readLine(), input != "" else { return nil }
 
     if let validInput = isValidInput(input: input) {
         print("유효한 입력: (validInput)")
-        return 2
+        return validInput
     }
     print("입력이 잘못되었습니다")
-    receivePlayerNumbers()
-    return 2
+    return nil
 }
 
 func isValidInput(input: String) -> [Int]? {
@@ -80,16 +86,11 @@ func isValidInput(input: String) -> [Int]? {
 func printRemainingAttempts() {
     remainingAttempts -= 1
     print("남은 기회: \(remainingAttempts)")
-    
-    guard remainingAttempts != 0 else {
-        print("컴퓨터 승리...!")
-        return
-    }
 }
 
+// 0일때 확인하기
 func startGame() {
     while remainingAttempts > 0 {
-    
         let strikeCount = playInning()
         
         if strikeCount == 3 {
@@ -98,6 +99,8 @@ func startGame() {
         }
         printRemainingAttempts()
     }
+    print("컴퓨터 승리...!")
+    return
 }
 
 func isValidMenu(_ input: String) -> Bool {
@@ -124,5 +127,6 @@ func receiveMenuNumber() {
 }
 
 receiveMenuNumber()
+
 
 
