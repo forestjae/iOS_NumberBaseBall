@@ -74,6 +74,22 @@ func startGame() {
     }
 }
 
+func printMenu() {
+    print("1. 게임시작\n 2. 게임종료")
+    print("원하는 기능을 선택해 주세요 : ")
+}
+
+func inputPlayerNumbers() {
+    guard let playerNumbers = readLine() else { return }
+    
+}
+
+func judgeRightInput(_ input: String) {
+    guard let input2 = Int(input), input2 < 3, input2 > 0 else { return }
+    guard let input2 = Int(input), input2 == 1 || input2 == 2 else { return }
+    
+}
+
 startGame()
 
 
