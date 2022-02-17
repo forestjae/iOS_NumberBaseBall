@@ -1,9 +1,10 @@
 ### iOS 커리어 스타터 캠프
 
 ## 숫자야구 게임
+개요 : 컴퓨터와 간단한 숫자야구 게임을 하는 콘솔 앱. 
 <img width="270" alt="스크린샷 2022-02-17 오후 7 31 12" src="https://user-images.githubusercontent.com/76479760/154457688-3be6fee3-f170-44bc-b066-14bae5611efe.png">
 
-[[STEP 1] PR](https://github.com/yagom-academy/ios-number-baseball/pull/57)
+[[STEP 1] PR](https://github.com/yagom-academy/ios-number-baseball/pull/57). 
 [[STEP 2] PR](https://github.com/yagom-academy/ios-number-baseball/pull/63)
 
 ## 1. 고민한 점
